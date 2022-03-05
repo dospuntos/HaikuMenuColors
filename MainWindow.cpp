@@ -4,6 +4,7 @@
 #include <Menu.h>
 #include <MenuItem.h>
 #include <View.h>
+#include <cstdlib>
 
 enum
 {
@@ -11,7 +12,8 @@ enum
 	M_SET_COLOR_GREEN = 'sgrn',
 	M_SET_COLOR_BLUE = 'sblu',
 	M_SET_COLOR_BLACK = 'sblk',
-	M_SET_COLOR_PINK = 'spnk'
+	M_SET_COLOR_PINK = 'spnk',
+	M_SET_COLOR_RANDOM = 'rndm'
 };
 
 MainWindow::MainWindow(void)
@@ -38,7 +40,8 @@ MainWindow::MainWindow(void)
 	menu->AddItem(new BMenuItem("Green",new BMessage(M_SET_COLOR_GREEN),'G'));
 	menu->AddItem(new BMenuItem("Blue",new BMessage(M_SET_COLOR_BLUE),'B'));
 	menu->AddItem(new BMenuItem("Black",new BMessage(M_SET_COLOR_BLACK),'K'));
-	menu->AddItem(new BMenuItem("Pink",new BMessage(M_SET_COLOR_PINK),'P'));	
+	menu->AddItem(new BMenuItem("Pink",new BMessage(M_SET_COLOR_PINK),'P'));
+	menu->AddItem(new BMenuItem("Random",new BMessage(M_SET_COLOR_RANDOM),'X'));
 	
 	//The menu bar adds menus the same way that a menu adds items.
 	menuBar->AddItem(menu);
@@ -88,6 +91,16 @@ MainWindow::MessageReceived(BMessage *msg)
 		case M_SET_COLOR_PINK:
 		{
 			view->SetViewColor(255,100,255);
+			view->Invalidate();
+			break;
+		}
+		case M_SET_COLOR_RANDOM:
+		{
+			int red = rand()%256;
+			int green = rand()%256;
+			int blue = rand()%256;
+			
+			view->SetViewColor(red,green,blue);
 			view->Invalidate();
 			break;
 		}
