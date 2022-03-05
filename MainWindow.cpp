@@ -59,6 +59,24 @@ MainWindow::MessageReceived(BMessage *msg)
 			view->Invalidate();
 			break;
 		}
+		case M_SET_COLOR_GREEN:
+		{
+			view->SetViewColor(0,160,0);
+			view->Invalidate();
+			break;
+		}
+		case M_SET_COLOR_BLUE:
+		{
+			view->SetViewColor(0,0,160);
+			view->Invalidate();
+			break;
+		}
+		case M_SET_COLOR_BLACK:
+		{
+			view->SetViewColor(0,0,0);
+			view->Invalidate();
+			break;
+		}
 		default:
 		{
 			BWindow::MessageReceived(msg);
