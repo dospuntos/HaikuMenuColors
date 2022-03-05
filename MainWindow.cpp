@@ -10,7 +10,8 @@ enum
 	M_SET_COLOR_RED = 'sred',
 	M_SET_COLOR_GREEN = 'sgrn',
 	M_SET_COLOR_BLUE = 'sblu',
-	M_SET_COLOR_BLACK = 'sblk'
+	M_SET_COLOR_BLACK = 'sblk',
+	M_SET_COLOR_PINK = 'spnk'
 };
 
 MainWindow::MainWindow(void)
@@ -25,12 +26,19 @@ MainWindow::MainWindow(void)
 	BMenuBar *menuBar = new BMenuBar(r,"menubar");
 	AddChild(menuBar);
 	
+	//Create a "File" menu
+	BMenu *filemenu = new BMenu("File");
+	filemenu->AddItem(new BMenuItem("Quit", new BMessage(B_QUIT_REQUESTED),'Q'));
+
+	menuBar->AddItem(filemenu);
+	
 	//This is the code that creates and populates the menu
 	BMenu *menu = new BMenu("Colors");
 	menu->AddItem(new BMenuItem("Red",new BMessage(M_SET_COLOR_RED),'R'));
 	menu->AddItem(new BMenuItem("Green",new BMessage(M_SET_COLOR_GREEN),'G'));
 	menu->AddItem(new BMenuItem("Blue",new BMessage(M_SET_COLOR_BLUE),'B'));
 	menu->AddItem(new BMenuItem("Black",new BMessage(M_SET_COLOR_BLACK),'K'));
+	menu->AddItem(new BMenuItem("Pink",new BMessage(M_SET_COLOR_PINK),'P'));	
 	
 	//The menu bar adds menus the same way that a menu adds items.
 	menuBar->AddItem(menu);
@@ -74,6 +82,12 @@ MainWindow::MessageReceived(BMessage *msg)
 		case M_SET_COLOR_BLACK:
 		{
 			view->SetViewColor(0,0,0);
+			view->Invalidate();
+			break;
+		}
+		case M_SET_COLOR_PINK:
+		{
+			view->SetViewColor(255,100,255);
 			view->Invalidate();
 			break;
 		}
